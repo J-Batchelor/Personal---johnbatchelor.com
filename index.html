@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>John Batchelor</title>
+<meta name="description" content="John Batchelor — personal website." />
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #faf7f1; color: #1c1a16;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+    min-height: 100vh; display: flex; flex-direction: column; padding: 2rem;
+    -webkit-font-smoothing: antialiased;
+  }
+  header { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; color: #8a8478; max-width: 46rem; margin: 0 auto; width: 100%; }
+  main { flex: 1; display: flex; flex-direction: column; justify-content: center; max-width: 46rem; margin: 0 auto; width: 100%; padding: 4rem 0; }
+  h1 { font-size: clamp(2.6rem, 7vw, 4.5rem); font-weight: 650; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 1.25rem; }
+  h1 span { color: #b3541e; }
+  .rule { width: 4rem; height: 3px; background: #b3541e; margin-bottom: 1.5rem; }
+  p.lede { color: #5c574c; font-size: 1.1rem; line-height: 1.7; max-width: 32rem; margin-bottom: 2.5rem; }
+  .links { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
+  a.btn { padding: 0.8rem 1.7rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.95rem; }
+  a.solid { background: #1c1a16; color: #faf7f1; }
+  a.solid:hover { background: #b3541e; }
+  /* Contact form */
+  .contact { border-top: 1px solid #e7e0d2; padding-top: 3rem; max-width: 32rem; }
+  .contact h2 { font-size: 1.5rem; font-weight: 650; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+  .contact p.sub { color: #8a8478; font-size: 0.95rem; margin-bottom: 1.75rem; }
+  .field { margin-bottom: 1.25rem; }
+  label { display: block; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #8a8478; margin-bottom: 0.45rem; }
+  input, textarea {
+    width: 100%; padding: 0.8rem 1rem; font-size: 1rem; font-family: inherit;
+    border: 1px solid #d8d2c4; border-radius: 6px; background: #fff; color: #1c1a16;
+  }
+  input:focus, textarea:focus { outline: none; border-color: #b3541e; box-shadow: 0 0 0 3px rgba(179,84,30,0.12); }
+  textarea { min-height: 8rem; resize: vertical; }
+  .hp { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+  button.submit {
+    background: #1c1a16; color: #faf7f1; border: none; border-radius: 6px;
+    padding: 0.9rem 2.2rem; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: inherit;
+  }
+  button.submit:hover:not(:disabled) { background: #b3541e; }
+  button.submit:disabled { opacity: 0.55; cursor: default; }
+  .form-note { margin-top: 1rem; font-size: 0.9rem; min-height: 1.4em; }
+  .form-note.ok { color: #3e7d3a; }
+  .form-note.err { color: #b3261e; }
+  .cf-turnstile { margin: 0.25rem 0 1.25rem; }
+  footer { max-width: 46rem; margin: 0 auto; width: 100%; color: #a39c8b; font-size: 0.8rem; border-top: 1px solid #e7e0d2; padding-top: 1.25rem; }
+</style>
+</head>
+<body>
+  <header><span>John Batchelor</span><span>Est. 2026</span></header>
+  <main>
+    <h1>Hello, I'm <span>John</span>.</h1>
+    <div class="rule"></div>
+    <p class="lede">This is my corner of the internet — you can reach me here.</p>
+    <div class="links">
+      <a class="btn solid" href="https://www.linkedin.com/in/batchelorjohn" target="_blank" rel="noopener">Connect on LinkedIn</a>
+    </div>
+
+    <section class="contact">
+      <h2>Get in touch</h2>
+      <p class="sub">Send me a message — it lands straight in my inbox.</p>
+      <form id="contact-form" novalidate>
+        <div class="field">
+          <label for="cf-name">Name</label>
+          <input id="cf-name" name="name" type="text" autocomplete="name" required maxlength="100" />
+        </div>
+        <div class="field">
+          <label for="cf-email">Email</label>
+          <input id="cf-email" name="email" type="email" autocomplete="email" required maxlength="254" />
+        </div>
+        <div class="field">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" required maxlength="5000"></textarea>
+        </div>
+        <div class="hp" aria-hidden="true">
+          <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+        </div>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAE86QfvEK6TP1RW8"></div>
+        <button class="submit" type="submit" id="cf-submit">Send message</button>
+        <p class="form-note" id="cf-note" role="status"></p>
+      </form>
+    </section>
+  </main>
+  <footer>Wake Forest, North Carolina &nbsp;·&nbsp; &copy; 2026 John Batchelor</footer>
+
+<script>
+(function () {
+  const form = document.getElementById('contact-form');
+  const note = document.getElementById('cf-note');
+  const submit = document.getElementById('cf-submit');
+
+  function setNote(msg, cls) {
+    note.textContent = msg;
+    note.className = 'form-note' + (cls ? ' ' + cls : '');
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    setNote('', '');
+    const name = document.getElementById('cf-name').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const message = document.getElementById('cf-message').value.trim();
+    const website = form.querySelector('input[name="website"]').value;
+    const turnstileToken = (window.turnstile && typeof turnstile.getResponse === 'function')
+      ? turnstile.getResponse() : '';
+
+    if (!name || !email || !message) { setNote('Please fill in your name, email, and message.', 'err'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setNote('That email address doesn\u2019t look right.', 'err'); return; }
+
+    submit.disabled = true;
+    submit.textContent = 'Sending\u2026';
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message, website, turnstileToken })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) {
+        setNote('Thanks — your message is on its way. I\u2019ll be in touch.', 'ok');
+        form.reset();
+        if (window.turnstile) turnstile.reset();
+      } else {
+        setNote(data.error || 'Something went wrong. Please try again later.', 'err');
+      }
+    } catch (err) {
+      setNote('Couldn\u2019t send just now — please try again in a moment.', 'err');
+    }
+    submit.disabled = false;
+    submit.textContent = 'Send message';
+  });
+})();
+</script>
+</body>
+</html>
