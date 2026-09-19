@@ -37,7 +37,7 @@ export async function onRequestPost(context) {
   if (!turnstileToken) {
     return json({ error: 'Please complete the verification check.' }, 400);
   }
-  if (!env.TURNSTILE_SECRET_KEY || !env.RESEND_API_KEY) {
+  if (!env.TURNSTILE_SECRET_KEY || !env.RESEND_API_KEY || !env.CONTACT_TO) {
     return json({ error: 'Message service is not configured yet.' }, 503);
   }
 
@@ -60,7 +60,7 @@ export async function onRequestPost(context) {
   }
 
   // Send via Resend.
-  const to = env.CONTACT_TO || 'john@johnbatchelor.com';
+  const to = env.CONTACT_TO;
   try {
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
